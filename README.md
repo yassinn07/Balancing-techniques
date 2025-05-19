@@ -1,97 +1,91 @@
-Credit Card Fraud Detection Analysis Report
+# Credit Card Fraud Detection
 
-1. Dataset Overview
+A comprehensive analysis of credit card fraud using Logistic Regression, with a focus on handling imbalanced datasets.
 
-The dataset was successfully loaded from creditcard.csv, with shape (284807, 31) and no missing values.
+---
 
-Class Distribution:
+## 📊 Dataset Overview
 
-Non-Fraud (0): 284315
+- **Source:** `creditcard.csv`
+- **Shape:** `(284807, 31)`
+- **Missing Values:** None
 
-Fraud (1): 492
+### Class Distribution
 
-Fraud Percentage: ~0.1727% — highlighting significant class imbalance.
+- **Non-Fraud (0):** 284,315
+- **Fraud (1):** 492
+- **Fraud Percentage:** ~0.1727%
 
-2. Data Preprocessing
+⚠️ **Note:** The dataset is highly imbalanced.
 
-Scaling: Amount and Time features were standardized using StandardScaler, and the original columns were dropped.
+---
 
-Split: Data was split into training (80%) and testing (20%) sets using stratification.
+## 🔧 Data Preprocessing
 
-3. Model Training and Evaluation
+- **Scaling:** `Amount` and `Time` features were standardized using `StandardScaler`.
+- **Dropped:** Original `Amount` and `Time` columns.
+- **Train/Test Split:** 80/20 with stratification to preserve class ratios.
 
-A. Original Unbalanced Data
+---
 
-Model: Logistic Regression
+## 🧠 Model Training & Evaluation
 
-Results:
+### A. Logistic Regression on Original Data
 
-Accuracy: ~99.38%
+- **Accuracy:** ~99.38%
+- **Precision (Fraud):** ~0.88
+- **Recall (Fraud):** ~0.59
+- **F1-Score (Fraud):** ~0.70
 
-Precision (Fraud): ~0.88
+📌 High accuracy, but poor recall. Many fraudulent transactions were not detected.
 
-Recall (Fraud): ~0.59
+---
 
-F1-Score (Fraud): ~0.70
+### B. Random Oversampling
 
-Observation: High accuracy but relatively low recall indicates many fraudulent transactions were missed.
+- **Accuracy:** ~97.24%
+- **Precision (Fraud):** ~0.07
+- **Recall (Fraud):** ~0.91
+- **F1-Score (Fraud):** ~0.14
 
-B. Random Oversampling
+📌 Better recall but significantly worse precision. Many false positives.
 
-Results:
+---
 
-Accuracy: ~97.24%
+### C. Random Undersampling
 
-Precision (Fraud): ~0.07
+- **Accuracy:** ~97.65%
+- **Precision (Fraud):** ~0.08
+- **Recall (Fraud):** ~0.88
+- **F1-Score (Fraud):** ~0.15
 
-Recall (Fraud): ~0.91
+📌 Similar to oversampling in trade-offs.
 
-F1-Score (Fraud): ~0.14
+---
 
-Observation: Significant improvement in recall at the cost of precision. Many non-fraud transactions misclassified.
+### D. SMOTE (Synthetic Minority Over-sampling Technique)
 
-C. Random Undersampling
+- **Accuracy:** ~97.62%
+- **Precision (Fraud):** ~0.08
+- **Recall (Fraud):** ~0.89
+- **F1-Score (Fraud):** ~0.15
 
-Results:
+📌 SMOTE provides the best balance in recall without major drops in other metrics.
 
-Accuracy: ~97.65%
+---
 
-Precision (Fraud): ~0.08
+## 📈 Visualizations
 
-Recall (Fraud): ~0.88
+- **Class Distribution:** Plotted using Seaborn's `countplot`.
+- **Correlation Matrix:** Heatmap to analyze PCA components vs. target.
+- **Confusion Matrices:** Plotted for each sampling method to visualize model performance.
 
-F1-Score (Fraud): ~0.15
+---
 
-Observation: Similar to oversampling. Recall improves but precision suffers.
+## ✅ Conclusions
 
-D. SMOTE (Synthetic Minority Over-sampling Technique)
+- The extreme class imbalance poses challenges for conventional models.
+- **Recall** is more critical than precision in fraud detection.
+- **SMOTE** yielded the most balanced improvement in detecting fraudulent transactions.
 
-Results:
-
-Accuracy: ~97.62%
-
-Precision (Fraud): ~0.08
-
-Recall (Fraud): ~0.89
-
-F1-Score (Fraud): ~0.15
-
-Observation: SMOTE leads to slightly better recall compared to ROS and RUS.
-
-4. Visualizations
-
-Class Distribution: Visualized using seaborn countplots.
-
-Correlation Matrix: Large heatmap provided insights into relationships between PCA components and target variable.
-
-Confusion Matrices: Plotted for each sampling strategy using seaborn.heatmap to highlight classification errors.
-
-5. Conclusions
-
-The dataset is highly imbalanced, making it challenging for traditional models.
-
-Logistic Regression on the original data had poor recall despite high accuracy.
-
-SMOTE showed the best balance in metrics among resampling methods, particularly increasing recall substantially.
-
-For real-world fraud detection, recall is crucial — better to flag more frauds even if some false positives occur.
+---
